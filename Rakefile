@@ -6,25 +6,21 @@ task :default => :package do
   puts "Don't forget to write some tests!"
 end
 
-# This builds the actual gem. For details of what all these options
-# mean, and other ones you can add, check the documentation here:
-#
-#   http://rubygems.org/read/chapter/20
-#
 spec = Gem::Specification.new do |s|
   
   # Change these as appropriate
   s.name              = "http_redirect_test"
   s.version           = "0.1.0"
-  s.summary           = "What this thing does"
-  s.author            = "Your name"
-  s.email             = "you@example.com"
-  s.homepage          = "http://example.com"
+  s.summary           = "A subclass of Test::Unit::TestCase to allow for http redirect testing, packaged from a gist by Patrick Reagan of Viget Labs"
+  s.author            = "Matt House"
+  s.email             = "matt@theshadowaspect.com"
+  s.homepage          = "http://github.com/shadowaspect"
 
   s.has_rdoc          = false
   
   s.files             = Dir.glob("lib/**/*.rb")
   s.require_paths     = ["lib"]
+
 end
 
 # This task actually builds the gem. We also regenerate a static 
