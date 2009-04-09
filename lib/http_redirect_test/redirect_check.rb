@@ -23,7 +23,7 @@ class RedirectCheck
   end
  
   def response
-    @response ||= Net::HTTP.start(uri.host, uri.port) {|http| http.head(uri.path) }
+    @response ||= Net::HTTP.start(uri.host, uri.port) {|http| return http.head(uri.path) }
   end
   
   def success?
