@@ -1,10 +1,9 @@
 require "rubygems"
 require "rake/gempackagetask"
 require "rake/rdoctask"
+require "rake/testtask"
 
-task :default => :package do
-  puts "Don't forget to write some tests!"
-end
+task :default => :test
 
 spec = Gem::Specification.new do |s|
   
@@ -23,14 +22,17 @@ spec = Gem::Specification.new do |s|
 
 end
 
-# This task actually builds the gem. We also regenerate a static 
-# .gemspec file, which is useful if something (i.e. GitHub) will
-# be automatically building a gem for this project. If you're not
-# using GitHub, edit as appropriate.
+
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
   
   # Generate the gemspec file for github.
   file = File.dirname(__FILE__) + "/#{spec.name}.gemspec"
   File.open(file, "w") {|f| f << spec.to_ruby }
+end
+
+desc 'Test the compiled binary.'
+Rake::TestTask.new(:test) do |t|
+  t.pattern = 'test/**/*.rb'
+  t.verbose = true
 end
