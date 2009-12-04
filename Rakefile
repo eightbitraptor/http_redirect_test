@@ -9,11 +9,11 @@ spec = Gem::Specification.new do |s|
   
   # Change these as appropriate
   s.name              = "http_redirect_test"
-  s.version           = "0.1.0"
+  s.version           = "0.1.1"
   s.summary           = "A subclass of Test::Unit::TestCase to allow for http redirect testing, packaged from a gist by Patrick Reagan of Viget Labs"
   s.author            = "Matt House"
   s.email             = "matt@theshadowaspect.com"
-  s.homepage          = "http://github.com/shadowaspect"
+  s.homepage          = "http://github.com/shadowaspect/http_redirect_test"
 
   s.has_rdoc          = false
   
