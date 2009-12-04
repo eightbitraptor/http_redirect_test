@@ -10,7 +10,11 @@ class HTTPRedirectTest < Test::Unit::TestCase
 
   class <<self
     def domain=(domain)
-      RedirectCheck.domain = domain
+      @domain = domain
+    end
+
+    def domain
+      @domain
     end
 
     def permanent=(permanent)
@@ -24,7 +28,7 @@ class HTTPRedirectTest < Test::Unit::TestCase
     def should_not_redirect(path)
       class_eval <<-CODE
         def test_#{name_for(path)}_should_not_redirect
-          check = RedirectCheck.new('#{path}')
+          check = RedirectCheck.new(self.class.domain, '#{path}')
           assert_equal false, check.redirected?, "#{path} is redirecting"
           assert_equal true, check.success?, "#{path} is not a success response"
         end
@@ -49,7 +53,7 @@ class HTTPRedirectTest < Test::Unit::TestCase
 
       class_eval <<-CODE
         def test_#{name_for(source_path)}_should_redirect_to_#{name_for(destination_path)}
-          redirection = RedirectCheck.new('#{source_path}', '#{destination_path}')
+          redirection = RedirectCheck.new(self.class.domain, '#{source_path}', '#{destination_path}')
           assert_equal true, redirection.redirected?, "'#{source_path}' is not redirecting"
           assert_equal '#{destination_path}', redirection.redirected_path,
           "'#{source_path}' is not redirecting to '#{destination_path}'"

@@ -2,24 +2,16 @@ require 'uri'
 require 'net/http'
 
 class RedirectCheck
-
-  def self.domain=(domain)
-    @domain = domain
-  end
-
-  def self.domain
-    @domain
-  end
-
   attr_reader :source_path, :destination_path
 
-  def initialize(source_path, destination_path = nil)
+  def initialize(domain, source_path, destination_path = nil)
+    @domain = domain
     @source_path = source_path.to_s
     @destination_path = destination_path.to_s
   end
 
   def uri
-    URI.parse("http://#{self.class.domain}#{source_path}")
+    URI.parse("http://#{@domain}#{source_path}")
   end
 
   def response
