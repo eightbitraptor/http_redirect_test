@@ -9,17 +9,8 @@ class HTTPRedirectTest < Test::Unit::TestCase
   def default_test; end # placeholder to stop Test::Unit from complaining
 
   class <<self
-    def domain=(domain)
-      @domain = domain
-    end
-
-    def domain
-      @domain
-    end
-
-    def permanent=(permanent)
-      @permanent=permanent
-    end
+    attr_accessor :domain
+    attr_writer :permanent
 
     def permanent?
       @permanent.nil? ? false : true
