@@ -11,11 +11,11 @@ class HTTPRedirectTest < Test::Unit::TestCase
   def self.domain=(domain)
     RedirectCheck.domain = domain
   end
-  
+
   def self.permanent=(permanent)
     @permanent=permanent
   end
-  
+
   def self.permanent?
     @permanent.nil? ? false : true
   end
@@ -34,9 +34,9 @@ class HTTPRedirectTest < Test::Unit::TestCase
     name = path.gsub(/\W+/, '_')
     name.gsub!(/^_+/, '')
     name.gsub!(/_+$/, '')
-  
+
     name = 'root' if name == ''
-  
+
     name
   end
 
@@ -45,14 +45,14 @@ class HTTPRedirectTest < Test::Unit::TestCase
     destination_path = ResourcePath.new(options[:to], :param => 'subdir').to_s
 
     @permanent = options.fetch(:permanent, true) if @permanent.blank?
-  
+
     class_eval <<-CODE
       def test_#{name_for(source_path)}_should_redirect_to_#{name_for(destination_path)}
         redirection = RedirectCheck.new('#{source_path}', '#{destination_path}')
         assert_equal true, redirection.redirected?, "'#{source_path}' is not redirecting"
         assert_equal '#{destination_path}', redirection.redirected_path,
         "'#{source_path}' is not redirecting to '#{destination_path}'"
-        
+
         if #{@permanent}
           assert_equal true, redirection.permanent_redirect?,
           "The redirection from '#{source_path}' to '#{destination_path}' doesn't appear to be a permanent redirect"
