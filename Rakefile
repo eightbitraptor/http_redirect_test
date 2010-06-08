@@ -13,13 +13,13 @@ spec = Gem::Specification.new do |s|
   s.summary           = "A subclass of Test::Unit::TestCase to allow for http redirect testing, packaged from a gist by Patrick Reagan of Viget Labs"
   s.author            = "Matt House"
   s.email             = "matt@theshadowaspect.com"
-  s.homepage          = "http://github.com/shadowaspect/http_redirect_test"
+  s.homepage          = "http://github.com/eightbitraptor/http_redirect_test"
 
   s.has_rdoc          = false
   
   s.files             = Dir.glob("lib/**/*.rb")
   s.require_paths     = ["lib"]
-
+  s.add_dependency("mocha", [">= 0.9.5"])
 end
 
 
