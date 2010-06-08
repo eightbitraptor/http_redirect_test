@@ -38,6 +38,14 @@ class RedirectCheckTest < Test::Unit::TestCase
     assert_equal "http://www.someurl.com", r.redirected_path
   end
 
+  def test_redirection_path_without_query_params
+    assert_equal "/index.html", RedirectCheck.new("example.com", "/index.html").source_uri
+  end
+  
+  def test_redirection_path_with_query_params
+    assert_equal "/index.html?foo=bar", RedirectCheck.new("example.com", "/index.html?foo=bar").source_uri
+  end
+
 private
   def stub_http_head_request(response_type)
     @http_head = response_type.new(stub, stub, stub)

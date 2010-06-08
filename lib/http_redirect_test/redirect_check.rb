@@ -15,7 +15,7 @@ class RedirectCheck
   end
 
   def response
-    @response ||= Net::HTTP.start(uri.host, uri.port) {|http| return http.head(uri.path) }
+    @response ||= Net::HTTP.start(uri.host, uri.port) {|http| return http.head(source_uri) }
   end
 
   def success?
@@ -32,6 +32,10 @@ class RedirectCheck
 
   def redirected_path
     response['location'].sub(/#{Regexp.escape("#{uri.scheme}://#{uri.host}")}/, '') if redirected?
+  end
+  
+  def source_uri
+    @source_uri ||= (uri.query.nil?) ? uri.path : uri.path + "?" + uri.query
   end
 
 end
