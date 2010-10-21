@@ -22,7 +22,6 @@ class HTTPRedirectTest < Test::Unit::TestCase
       name
     end
 
-
     def should_not_redirect(path)
       class_eval <<-CODE
         def test_#{name_for(path)}_should_not_redirect
@@ -50,6 +49,24 @@ class HTTPRedirectTest < Test::Unit::TestCase
             assert_equal true, redirection.permanent_redirect?,
             "The redirection from '#{source_path}' to '#{destination_path}' doesn't appear to be a permanent redirect"
           end
+        end
+      CODE
+    end
+
+    def should_be_gone(path)
+      class_eval <<-CODE
+        def test_#{name_for(path)}_should_be_gone
+          check = RedirectCheck.new(self.class.domain, '#{path}')
+          assert check.gone?
+        end
+      CODE
+    end
+
+    def should_not_be_found(path)
+      class_eval <<-CODE
+        def test_#{name_for(path)}_should_be_gone
+          check = RedirectCheck.new(self.class.domain, '#{path}')
+          assert check.not_found?
         end
       CODE
     end

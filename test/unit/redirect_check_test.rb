@@ -26,6 +26,16 @@ class RedirectCheckTest < Test::Unit::TestCase
     assert RedirectCheck.new("example.com", "/index.html").permanent_redirect?
   end
 
+  def test_that_gone_page_returns_correctly
+    stub_http_head_request(Net::HTTPGone)
+    assert RedirectCheck.new("example.com", "/index.html").gone?
+  end
+
+  def test_that_not_found_page_returns_correctly
+    stub_http_head_request(Net::HTTPNotFound)
+    assert RedirectCheck.new("example.com", "/index.html").not_found?
+  end
+
   def test_that_uri_can_be_built_correctly
     assert_equal RedirectCheck.new("example.com", "/index.html").uri, URI.parse("http://example.com/index.html")
   end
@@ -41,7 +51,7 @@ class RedirectCheckTest < Test::Unit::TestCase
   def test_redirection_path_without_query_params
     assert_equal "/index.html", RedirectCheck.new("example.com", "/index.html").source_uri
   end
-  
+
   def test_redirection_path_with_query_params
     assert_equal "/index.html?foo=bar", RedirectCheck.new("example.com", "/index.html?foo=bar").source_uri
   end
