@@ -70,6 +70,16 @@ class HTTPRedirectTest < Test::Unit::TestCase
         end
       CODE
     end
+
+    def should_have_header(path, header, options)
+      value = options[:with_value]
+      class_eval <<-CODE
+        def test_should_return_value_for_#{name_for(header)}_header
+          check = RedirectCheck.new(self.class.domain, '#{path}')
+          assert_equal '#{value}', check.header('#{header}')
+        end
+      CODE
+    end
   end
 
 end

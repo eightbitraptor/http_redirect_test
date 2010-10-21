@@ -46,4 +46,8 @@ class RedirectCheck
     response['location'].sub(/#{Regexp.escape("#{uri.scheme}://#{uri.host}")}/, '') if redirected?
   end
 
+  def header(name)
+    response.key?(name) && response.fetch(name)
+  end
+
 end

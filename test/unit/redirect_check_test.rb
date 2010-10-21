@@ -56,9 +56,23 @@ class RedirectCheckTest < Test::Unit::TestCase
     assert_equal "/index.html?foo=bar", RedirectCheck.new("example.com", "/index.html?foo=bar").source_uri
   end
 
+  def test_request_for_specific_header
+    stub_http_header('X-Powered-By', 'Pixies and Stardust')
+    assert RedirectCheck.new("example.com", "/index.html").header('X-Powered-By') == "Pixies and Stardust"
+  end
+
 private
   def stub_http_head_request(response_type)
     @http_head = response_type.new(stub, stub, stub)
+    @http_session = stub(:session)
+    @http_session.stubs(:head).with("/index.html").returns(@http_head)
+    Net::HTTP.stubs(:start).with("example.com", 80).yields(@http_session)
+  end
+
+  def stub_http_header(header_name, value)
+    @http_head = Net::HTTPOK.new(stub, stub, stub)
+    @http_head.stubs(:key?).with(header_name).returns(true)
+    @http_head.stubs(:fetch).with(header_name).returns(value)
     @http_session = stub(:session)
     @http_session.stubs(:head).with("/index.html").returns(@http_head)
     Net::HTTP.stubs(:start).with("example.com", 80).yields(@http_session)
