@@ -16,6 +16,13 @@ class HTTPRedirectTest < Test::Unit::TestCase
       @permanent.nil? ? false : true
     end
 
+    def name_for(path)
+      name = path.strip.gsub(/\W+/, '_')
+      name = 'root' if name == ''
+      name
+    end
+
+
     def should_not_redirect(path)
       class_eval <<-CODE
         def test_#{name_for(path)}_should_not_redirect
@@ -24,16 +31,6 @@ class HTTPRedirectTest < Test::Unit::TestCase
           assert_equal true, check.success?, "#{path} is not a success response"
         end
       CODE
-    end
-
-    def name_for(path)
-      name = path.gsub(/\W+/, '_')
-      name.gsub!(/^_+/, '')
-      name.gsub!(/_+$/, '')
-
-      name = 'root' if name == ''
-
-      name
     end
 
     def should_redirect(source, options)
