@@ -24,4 +24,7 @@ you then have access to a bunch of macros to test various responses from your ch
       should_not_be_found "/404.html"                                     # explicitly 404
 
 
+Thanks
+------
 
+Inspired by a blog post by Patrick Reagan of Viget Labs, thanks man.
