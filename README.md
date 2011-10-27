@@ -9,7 +9,7 @@ Example
 simply subclass HTTPRedirectTest in your tests and set the domain that you want to test
 
     require 'http_redirect_test'
-    
+
     class ExampleComTest < HTTPRedirectTest
       self.domain =  "example.com"
       # rest of tests here
