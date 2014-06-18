@@ -47,7 +47,7 @@ class RedirectCheck
   end
 
   def header(name)
-    response.key?(name) && response.fetch(name)
+    response[name]
   end
 
 end

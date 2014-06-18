@@ -67,11 +67,12 @@ private
   end
 
   def stub_http_header(header_name, value)
-    @http_head = Net::HTTPOK.new(stub, stub, stub)
-    @http_head.stubs(:key?).with(header_name).returns(true)
-    @http_head.stubs(:fetch).with(header_name).returns(value)
-    @http_session = stub(:session)
-    @http_session.stubs(:head).with("/index.html").returns(@http_head)
-    Net::HTTP.stubs(:start).with("example.com", 80).yields(@http_session)
+    http_head = Net::HTTPOK.new(stub, stub, stub)
+    http_head.initialize_http_header({ header_name => value })
+
+    http_session = stub(:session)
+    http_session.stubs(:head).with("/index.html").returns(http_head)
+
+    Net::HTTP.stubs(:start).with("example.com", 80).yields(http_session)
   end
 end
