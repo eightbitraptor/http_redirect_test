@@ -11,7 +11,7 @@ class HTTPRedirectTest < MiniTest::Unit::TestCase
     attr_writer :permanent
 
     def permanent?
-      @permanent.nil? ? false : true
+      !!@permanent
     end
 
     def name_for(path)
