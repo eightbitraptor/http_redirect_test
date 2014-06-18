@@ -1,6 +1,4 @@
-require File.join(File.dirname(__FILE__), "redirect_check")
-require File.join(File.dirname(__FILE__), "resource_path")
-require 'test/unit'
+require 'minitest/unit'
 
 class HTTPRedirectTest < MiniTest::Unit::TestCase
   # permanent can be overriden in 2 ways, with a call to self.permanent to set globally. Or via the options array for each redirect call

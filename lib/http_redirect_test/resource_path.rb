@@ -1,5 +1,4 @@
 class ResourcePath
-
   attr_writer :param
 
   def initialize(path, options = {})
@@ -14,5 +13,4 @@ class ResourcePath
   def to_s
     @path.gsub('*', param)
   end
-
 end
