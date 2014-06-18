@@ -15,9 +15,11 @@ class HTTPRedirectTest < MiniTest::Unit::TestCase
     end
 
     def name_for(path)
-      name = path.strip.gsub(/\W+/, '_')
-      name = 'root' if name == ''
-      name
+      if path.empty?
+        'root'
+      else
+        path.strip.gsub(/\W+/, '_')
+      end
     end
 
     def should_not_redirect(path)
