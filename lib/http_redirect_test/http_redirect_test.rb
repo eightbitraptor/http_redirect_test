@@ -6,21 +6,9 @@ class HTTPRedirectTest < MiniTest::Unit::TestCase
 
   def default_test; end # placeholder to stop Test::Unit from complaining
 
-  class <<self
+  module ClassMethods
     attr_accessor :domain
     attr_writer :permanent
-
-    def permanent?
-      !!@permanent
-    end
-
-    def name_for(path)
-      if path.empty?
-        'root'
-      else
-        path.strip.gsub(/\W+/, '_')
-      end
-    end
 
     def should_not_redirect(path)
       class_eval <<-CODE
@@ -80,6 +68,22 @@ class HTTPRedirectTest < MiniTest::Unit::TestCase
         end
       CODE
     end
+
+    private
+
+    def permanent?
+      !!@permanent
+    end
+
+    def name_for(path)
+      if path.empty?
+        'root'
+      else
+        path.strip.gsub(/\W+/, '_')
+      end
+    end
+
   end
 
+  extend ClassMethods
 end
