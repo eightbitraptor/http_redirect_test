@@ -1,5 +1,9 @@
-$:.unshift File.expand_path(File.join(File.dirname(__FILE__), "..", "lib"))
+require 'http_redirect_test'
 
-require 'rubygems'
-require 'test/unit'
-require 'mocha'
+require 'turn'
+require 'minitest/autorun'
+require 'mocha/mini_test'
+
+Turn.config do |c|
+  c.format = :pretty
+end

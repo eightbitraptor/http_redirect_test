@@ -1,7 +1,6 @@
-require File.join(File.dirname(__FILE__), "..", "test_helper")
-require 'http_redirect_test'
+require 'test_helper'
 
-class HttpRedirectTestTests < Test::Unit::TestCase
+class HttpRedirectTestTests < MiniTest::Unit::TestCase
   def test_that_permanent_flag_is_being_set_correctly
     assert_equal false,  HTTPRedirectTest.permanent?
     HTTPRedirectTest.permanent=true

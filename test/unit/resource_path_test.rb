@@ -1,5 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "test_helper")
-require 'http_redirect_test'
+require 'test_helper'
 
 class ResourcePathTest < Test::Unit::TestCase
 
@@ -7,5 +6,4 @@ class ResourcePathTest < Test::Unit::TestCase
     rp = ResourcePath.new("")
     assert rp.instance_of? ResourcePath
   end
-
 end

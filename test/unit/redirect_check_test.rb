@@ -1,10 +1,7 @@
-require File.join(File.dirname(__FILE__), "..", "test_helper")
-require 'http_redirect_test'
+require 'test_helper'
+require 'net/http'
 
-
-class RedirectCheckTest < Test::Unit::TestCase
-
-  require 'net/http'
+class RedirectCheckTest < MiniTest::Unit::TestCase
 
   def test_that_redirect_checker_returns_legitimate_response
     stub_http_head_request(Net::HTTPOK)
