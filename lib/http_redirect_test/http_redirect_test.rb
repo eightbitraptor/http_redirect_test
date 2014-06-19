@@ -6,7 +6,7 @@ class HTTPRedirectTest < MiniTest::Test
 
   module ClassMethods
     attr_reader :domain
-    attr_writer :permanent
+    attr_accessor :permanent
 
     def set_domain(domain)
       @domain = domain
@@ -27,14 +27,12 @@ class HTTPRedirectTest < MiniTest::Test
       source_path = ResourcePath.new(source, :param => 'subdir').to_s
       destination_path = ResourcePath.new(options[:to], :param => 'subdir').to_s
 
-      @permanent ||= options.fetch(:permanent, false)
-
       redirection = check_for(source_path, destination_path)
       assert_equal true, redirection.redirected?, "'#{source_path}' is not redirecting"
       assert_equal destination_path, redirection.redirected_path,
                    "'#{source_path}' is not redirecting to '#{destination_path}'"
 
-      if @permanent
+      if permanent? || options[:permanent]
         assert_equal true, redirection.permanent_redirect?,
                      "The redirection from '#{source_path}' to '#{destination_path}' doesn't appear to be a permanent redirect"
       end
