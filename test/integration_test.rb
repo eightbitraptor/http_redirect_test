@@ -51,3 +51,19 @@ class AllRedirectsArePermanent < HTTPRedirectTest
     should_redirect '/redirect', to: '/ok', permanent: false
   end
 end
+
+class DomainsWithExplicitSSLSchemes < HTTPRedirectTest
+  set_domain "https://uk.yahoo.com"
+
+  def test_should_not_redirect
+    should_not_redirect '/'
+  end
+end
+
+class DomainsWithExplicitNonSSLSchemes < HTTPRedirectTest
+  set_domain "http://www.example.com"
+
+  def test_should_not_redirect
+    should_not_redirect '/'
+  end
+end

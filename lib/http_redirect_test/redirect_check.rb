@@ -11,7 +11,7 @@ class RedirectCheck
   end
 
   def uri
-    URI.parse("http://#{@domain}#{source_path}")
+    URI.parse("#{scheme}://#{raw_domain}#{source_path}")
   end
 
   def source_uri
@@ -19,7 +19,9 @@ class RedirectCheck
   end
 
   def response
-    @response ||= Net::HTTP.start(uri.host, uri.port) {|http| return http.head(source_uri) }
+    @response ||= Net::HTTP.start(uri.host, uri.port, use_ssl: ssl?) do |http|
+      return http.head(source_uri)
+    end
   end
 
   def success?
@@ -50,4 +52,25 @@ class RedirectCheck
     response[name]
   end
 
+  private
+
+  def scheme
+    if domain_components.length == 2
+      scheme = domain_components.first
+    end
+
+    scheme || 'http'
+  end
+
+  def raw_domain
+    domain_components.last
+  end
+
+  def ssl?
+    scheme == 'https'
+  end
+
+  def domain_components
+    @domain_components ||= @domain.split('://')
+  end
 end

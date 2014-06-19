@@ -3,6 +3,10 @@ require 'net/http'
 
 class RedirectCheckTest < MiniTest::Test
 
+  def test_redirect_check_supports_https
+    assert_equal 'https', RedirectCheck.new('https://www.example.com', '/dontcare').uri.scheme
+  end
+
   def test_that_redirect_checker_returns_legitimate_response
     stub_http_head_request(Net::HTTPOK)
     assert_equal @http_head, RedirectCheck.new("example.com", "/index.html").response
@@ -63,7 +67,7 @@ private
     @http_head = response_type.new(stub, stub, stub)
     @http_session = stub(:session)
     @http_session.stubs(:head).with("/index.html").returns(@http_head)
-    Net::HTTP.stubs(:start).with("example.com", 80).yields(@http_session)
+    Net::HTTP.stubs(:start).with("example.com", 80, use_ssl: false).yields(@http_session)
   end
 
   def stub_http_header(header_name, value)
@@ -73,6 +77,6 @@ private
     http_session = stub(:session)
     http_session.stubs(:head).with("/index.html").returns(http_head)
 
-    Net::HTTP.stubs(:start).with("example.com", 80).yields(http_session)
+    Net::HTTP.stubs(:start).with("example.com", 80, use_ssl: false).yields(http_session)
   end
 end
