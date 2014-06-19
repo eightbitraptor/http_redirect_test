@@ -11,8 +11,15 @@ class HTTPRedirectTest < MiniTest::Test
     def set_domain(domain)
       @domain = domain
     end
+
+    def permanent?
+      !!@permanent
+    end
+  end
+
+  module InstanceMethods
     def should_not_redirect(path)
-      class_eval <<-CODE
+      instance_eval <<-CODE
         def test_#{name_for(path)}_should_not_redirect
           check = RedirectCheck.new(self.class.domain, '#{path}')
           assert_equal false, check.redirected?, "#{path} is redirecting"
@@ -27,7 +34,7 @@ class HTTPRedirectTest < MiniTest::Test
 
       @permanent ||= options.fetch(:permanent, false)
 
-      class_eval <<-CODE
+      instance_eval <<-CODE
         def test_#{name_for(source_path)}_should_redirect_to_#{name_for(destination_path)}
           redirection = RedirectCheck.new(self.class.domain, '#{source_path}', '#{destination_path}')
           assert_equal true, redirection.redirected?, "'#{source_path}' is not redirecting"
@@ -43,7 +50,7 @@ class HTTPRedirectTest < MiniTest::Test
     end
 
     def should_be_gone(path)
-      class_eval <<-CODE
+      instance_eval <<-CODE
         def test_#{name_for(path)}_should_be_gone
           check = RedirectCheck.new(self.class.domain, '#{path}')
           assert check.gone?
@@ -52,7 +59,7 @@ class HTTPRedirectTest < MiniTest::Test
     end
 
     def should_not_be_found(path)
-      class_eval <<-CODE
+      instance_eval <<-CODE
         def test_#{name_for(path)}_should_be_gone
           check = RedirectCheck.new(self.class.domain, '#{path}')
           assert check.not_found?
@@ -62,7 +69,7 @@ class HTTPRedirectTest < MiniTest::Test
 
     def should_have_header(path, header, options)
       value = options[:with_value]
-      class_eval <<-CODE
+      instance_eval <<-CODE
         def test_should_return_value_for_#{name_for(header)}_header
           check = RedirectCheck.new(self.class.domain, '#{path}')
           assert_equal '#{value}', check.header('#{header}')
@@ -73,7 +80,7 @@ class HTTPRedirectTest < MiniTest::Test
     private
 
     def permanent?
-      !!@permanent
+      !!self.class.permanent
     end
 
     def name_for(path)
@@ -83,8 +90,8 @@ class HTTPRedirectTest < MiniTest::Test
         path.strip.gsub(/\W+/, '_')
       end
     end
-
   end
 
   extend ClassMethods
+  include InstanceMethods
 end
