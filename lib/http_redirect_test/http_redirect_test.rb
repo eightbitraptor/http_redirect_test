@@ -31,7 +31,9 @@ class HTTPRedirectTest < MiniTest::Test
     assert_equal destination_path, redirection.redirected_path,
                  "'#{source_path}' is not redirecting to '#{destination_path}'"
 
-    if permanent? || options[:permanent]
+    return if options[:permanent] == false
+
+    if permanent? || options[:permanent] == true
       assert_equal true, redirection.permanent_redirect?,
                    "The redirection from '#{source_path}' to '#{destination_path}' doesn't appear to be a permanent redirect"
     end

@@ -46,4 +46,8 @@ class AllRedirectsArePermanent < HTTPRedirectTest
 
     assert assertion_failed
   end
+
+  def test_explicit_non_permanent_check_should_override
+    should_redirect '/redirect', to: '/ok', permanent: false
+  end
 end
