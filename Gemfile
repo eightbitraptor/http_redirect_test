@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rake'
+gem 'minitest', '~> 5.3.5'
 
 group :development, :test do
-  gem 'minitest', '~> 5.3.5'
+  gem 'rake'
   gem 'mocha', require: false
   gem 'sinatra'
 end
