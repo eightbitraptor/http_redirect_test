@@ -2,11 +2,14 @@ class HTTPRedirectTest < MiniTest::Test
   @permanent=nil
 
   class << self
-    attr_reader :domain
-    attr_accessor :permanent
+    attr_reader :domain, :permanent
 
     def set_domain(domain)
       @domain = domain
+    end
+
+    def treat_all_redirects_as_permanent
+      @permanent = true
     end
 
     def permanent?

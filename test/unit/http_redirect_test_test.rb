@@ -2,10 +2,11 @@ require 'test_helper'
 
 class HttpRedirectTestTests < MiniTest::Test
   def test_that_permanent_flag_is_being_set_correctly
-    assert_equal false,  HTTPRedirectTest.__send__(:permanent?)
+    assert_equal false,  HTTPRedirectTest.permanent?
 
-    HTTPRedirectTest.permanent=true
-    assert_equal true,  HTTPRedirectTest.__send__(:permanent?)
+    HTTPRedirectTest.treat_all_redirects_as_permanent
+
+    assert_equal true,  HTTPRedirectTest.permanent?
   end
 
   def test_each_class_should_have_its_own_domain
