@@ -43,7 +43,7 @@ class RedirectCheck
   end
 
   def redirected_path
-    response['location'].sub(/#{Regexp.escape("#{uri.scheme}://#{uri.host}")}/, '') if redirected?
+    response['location'].sub(/#{Regexp.escape("#{uri.scheme}://#{uri.host}")}:#{uri.port}/, '') if redirected?
   end
 
   def header(name)

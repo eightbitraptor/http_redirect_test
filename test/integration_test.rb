@@ -1,17 +1,15 @@
-class IntegrationTest < MiniTest::Test
-  def test_truth
-    response = Net::HTTP.get_response(uri_for('/ok'))
+require 'http_redirect_test'
 
-    assert has_code?(response, 200)
-  end
+class IntegrationTest < HTTPRedirectTest
+  self.domain = "localhost:4567"
 
-  private
+  should_not_redirect '/ok'
 
-  def uri_for(path)
-    URI.parse("http://localhost:4567#{path}")
-  end
+  should_redirect '/redirect', to: '/ok'
+  should_redirect '/redirect_permanant', to: '/ok', permanent: false
 
-  def has_code?(response, code)
-    Integer(response.code) == code
-  end
+  should_not_be_found '/not_found'
+  should_be_gone '/gone'
+
+  should_have_header('/custom_header', 'X-One-Million-Years', with_value: 'Dungeon')
 end

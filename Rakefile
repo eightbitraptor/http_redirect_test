@@ -15,8 +15,8 @@ task :integration_test do
   sleep 2
 
   begin
-    require 'minitest'
-    load 'test/integration_test.rb'
+    $LOAD_PATH.unshift(File.expand_path('../lib', __FILE__))
+    require_relative 'test/integration_test.rb'
     MiniTest.run
   ensure
     Process.kill(9, pid)

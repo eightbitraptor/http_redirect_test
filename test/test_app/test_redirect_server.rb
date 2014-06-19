@@ -13,12 +13,16 @@ get '/redirect_permanant' do
 end
 
 get '/not_found' do
+  status 404
 end
 
 get '/gone' do
+  status 410
 end
 
 get '/custom_header' do
+  headers['X-One-Million-Years'] = 'Dungeon'
+  status 200
 end
 
 

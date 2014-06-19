@@ -22,7 +22,7 @@ class HTTPRedirectTest < MiniTest::Test
       source_path = ResourcePath.new(source, :param => 'subdir').to_s
       destination_path = ResourcePath.new(options[:to], :param => 'subdir').to_s
 
-      @permanent = options.fetch(:permanent, true) if @permanent.nil?
+      @permanent ||= options.fetch(:permanent, false)
 
       class_eval <<-CODE
         def test_#{name_for(source_path)}_should_redirect_to_#{name_for(destination_path)}
