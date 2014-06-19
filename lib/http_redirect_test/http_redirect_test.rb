@@ -19,9 +19,8 @@ class HTTPRedirectTest < MiniTest::Test
 
   module InstanceMethods
     def should_not_redirect(path)
-      check = RedirectCheck.new(self.class.domain, path)
-      assert_equal false, check.redirected?, "#{path} is redirecting"
-      assert_equal true, check.success?, "#{path} is not a success response"
+      assert_equal false, check_for(path).redirected?, "#{path} is redirecting"
+      assert_equal true, check_for(path).success?, "#{path} is not a success response"
     end
 
     def should_redirect(source, options)
@@ -30,7 +29,7 @@ class HTTPRedirectTest < MiniTest::Test
 
       @permanent ||= options.fetch(:permanent, false)
 
-      redirection = RedirectCheck.new(self.class.domain, source_path, destination_path)
+      redirection = check_for(source_path, destination_path)
       assert_equal true, redirection.redirected?, "'#{source_path}' is not redirecting"
       assert_equal destination_path, redirection.redirected_path,
                    "'#{source_path}' is not redirecting to '#{destination_path}'"
@@ -42,22 +41,23 @@ class HTTPRedirectTest < MiniTest::Test
     end
 
     def should_be_gone(path)
-      check = RedirectCheck.new(self.class.domain, path)
-      assert check.gone?
+      assert check_for(path).gone?
     end
 
     def should_not_be_found(path)
-      check = RedirectCheck.new(self.class.domain, path)
-      assert check.not_found?
+      assert check_for(path).not_found?
     end
 
     def should_have_header(path, header, options)
       value = options[:with_value]
-      check = RedirectCheck.new(self.class.domain, path)
-      assert_equal value, check.header(header)
+      assert_equal value, check_for(path).header(header)
     end
 
     private
+
+    def check_for(path, destination=nil)
+      RedirectCheck.new(self.class.domain, path, destination)
+    end
 
     def permanent?
       !!self.class.permanent
