@@ -5,9 +5,12 @@ class HTTPRedirectTest < MiniTest::Test
   def default_test; end # placeholder to stop Test::Unit from complaining
 
   module ClassMethods
-    attr_accessor :domain
+    attr_reader :domain
     attr_writer :permanent
 
+    def set_domain(domain)
+      @domain = domain
+    end
     def should_not_redirect(path)
       class_eval <<-CODE
         def test_#{name_for(path)}_should_not_redirect

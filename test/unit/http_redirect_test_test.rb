@@ -10,9 +10,9 @@ class HttpRedirectTestTests < MiniTest::Test
 
   def test_each_class_should_have_its_own_domain
     a = Class.new(HTTPRedirectTest)
-    a.__send__(:domain=, "a.example.com")
+    a.set_domain "a.example.com"
     b = Class.new(HTTPRedirectTest)
-    b.__send__(:domain=, "b.example.com")
+    b.set_domain "b.example.com"
     assert_equal "a.example.com", a.__send__(:domain)
     assert_equal "b.example.com", b.__send__(:domain)
   end

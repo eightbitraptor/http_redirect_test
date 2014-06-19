@@ -1,7 +1,7 @@
 require 'http_redirect_test'
 
 class IntegrationTest < HTTPRedirectTest
-  self.domain = "localhost:4567"
+  set_domain "localhost:4567"
 
   should_not_redirect '/ok'
 
