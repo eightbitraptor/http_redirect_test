@@ -5,6 +5,5 @@ gem 'rake'
 group :development, :test do
   gem 'minitest', '~> 5.3.5'
   gem 'mocha', require: false
-  gem 'turn'
   gem 'sinatra'
 end
