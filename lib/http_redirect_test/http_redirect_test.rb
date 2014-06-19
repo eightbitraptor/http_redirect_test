@@ -19,13 +19,9 @@ class HTTPRedirectTest < MiniTest::Test
 
   module InstanceMethods
     def should_not_redirect(path)
-      instance_eval <<-CODE
-        def test_#{name_for(path)}_should_not_redirect
-          check = RedirectCheck.new(self.class.domain, '#{path}')
-          assert_equal false, check.redirected?, "#{path} is redirecting"
-          assert_equal true, check.success?, "#{path} is not a success response"
-        end
-      CODE
+      check = RedirectCheck.new(self.class.domain, path)
+      assert_equal false, check.redirected?, "#{path} is redirecting"
+      assert_equal true, check.success?, "#{path} is not a success response"
     end
 
     def should_redirect(source, options)
@@ -34,47 +30,31 @@ class HTTPRedirectTest < MiniTest::Test
 
       @permanent ||= options.fetch(:permanent, false)
 
-      instance_eval <<-CODE
-        def test_#{name_for(source_path)}_should_redirect_to_#{name_for(destination_path)}
-          redirection = RedirectCheck.new(self.class.domain, '#{source_path}', '#{destination_path}')
-          assert_equal true, redirection.redirected?, "'#{source_path}' is not redirecting"
-          assert_equal '#{destination_path}', redirection.redirected_path,
-          "'#{source_path}' is not redirecting to '#{destination_path}'"
+      redirection = RedirectCheck.new(self.class.domain, source_path, destination_path)
+      assert_equal true, redirection.redirected?, "'#{source_path}' is not redirecting"
+      assert_equal destination_path, redirection.redirected_path,
+                   "'#{source_path}' is not redirecting to '#{destination_path}'"
 
-          if #{@permanent}
-            assert_equal true, redirection.permanent_redirect?,
-            "The redirection from '#{source_path}' to '#{destination_path}' doesn't appear to be a permanent redirect"
-          end
-        end
-      CODE
+      if @permanent
+        assert_equal true, redirection.permanent_redirect?,
+                     "The redirection from '#{source_path}' to '#{destination_path}' doesn't appear to be a permanent redirect"
+      end
     end
 
     def should_be_gone(path)
-      instance_eval <<-CODE
-        def test_#{name_for(path)}_should_be_gone
-          check = RedirectCheck.new(self.class.domain, '#{path}')
-          assert check.gone?
-        end
-      CODE
+      check = RedirectCheck.new(self.class.domain, path)
+      assert check.gone?
     end
 
     def should_not_be_found(path)
-      instance_eval <<-CODE
-        def test_#{name_for(path)}_should_be_gone
-          check = RedirectCheck.new(self.class.domain, '#{path}')
-          assert check.not_found?
-        end
-      CODE
+      check = RedirectCheck.new(self.class.domain, path)
+      assert check.not_found?
     end
 
     def should_have_header(path, header, options)
       value = options[:with_value]
-      instance_eval <<-CODE
-        def test_should_return_value_for_#{name_for(header)}_header
-          check = RedirectCheck.new(self.class.domain, '#{path}')
-          assert_equal '#{value}', check.header('#{header}')
-        end
-      CODE
+      check = RedirectCheck.new(self.class.domain, path)
+      assert_equal value, check.header(header)
     end
 
     private
