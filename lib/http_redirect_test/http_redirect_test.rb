@@ -1,6 +1,4 @@
-require 'minitest/unit'
-
-class HTTPRedirectTest < MiniTest::Unit::TestCase
+class HTTPRedirectTest < MiniTest::Test
   # permanent can be overriden in 2 ways, with a call to self.permanent to set globally. Or via the options array for each redirect call
   @permanent=nil
 

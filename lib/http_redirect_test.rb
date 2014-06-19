@@ -1,3 +1,4 @@
+require 'minitest'
 require 'uri'
 require 'net/http'
 

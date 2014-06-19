@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'net/http'
 
-class RedirectCheckTest < MiniTest::Unit::TestCase
+class RedirectCheckTest < MiniTest::Test
 
   def test_that_redirect_checker_returns_legitimate_response
     stub_http_head_request(Net::HTTPOK)

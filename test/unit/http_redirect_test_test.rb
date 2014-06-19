@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HttpRedirectTestTests < MiniTest::Unit::TestCase
+class HttpRedirectTestTests < MiniTest::Test
   def test_that_permanent_flag_is_being_set_correctly
     assert_equal false,  HTTPRedirectTest.__send__(:permanent?)
 
