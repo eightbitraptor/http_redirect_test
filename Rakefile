@@ -15,6 +15,7 @@ task :integration_test do
   sleep 2
 
   begin
+    require 'minitest'
     load 'test/integration_test.rb'
     MiniTest.run
   ensure

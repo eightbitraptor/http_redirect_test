@@ -1,5 +1,3 @@
-require 'minitest'
-
 class IntegrationTest < MiniTest::Test
   def test_truth
     response = Net::HTTP.get_response(uri_for('/ok'))
