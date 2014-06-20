@@ -67,3 +67,21 @@ class DomainsWithExplicitNonSSLSchemes < HTTPRedirectTest
     should_not_redirect '/'
   end
 end
+
+class OverridingTheDomainPerTest < HTTPRedirectTest
+  set_domain "localhost:4567"
+
+  def test_root_domain_not_found
+    should_not_be_found '/'
+  end
+
+  def test_overridden_domain_works
+    override_domain_with 'http://www.example.com' do
+      should_not_redirect '/'
+    end
+  end
+
+  def test_no_state_should_leak_after_tests
+    should_not_be_found '/'
+  end
+end

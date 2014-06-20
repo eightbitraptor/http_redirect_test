@@ -52,10 +52,17 @@ class HTTPRedirectTest < MiniTest::Test
     assert_equal value, check_for(path).header(header)
   end
 
+  def override_domain_with(domain, &block)
+    @domain = domain
+    block.call
+  ensure
+    @domain = nil
+  end
+
   private
 
   def check_for(path, destination=nil)
-    RedirectCheck.new(self.class.domain, path, destination)
+    RedirectCheck.new(@domain || self.class.domain, path, destination)
   end
 
   def permanent?
