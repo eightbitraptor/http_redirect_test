@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name = "http_redirect_test"
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.authors = ["Matt House"]
-  s.date = %q{2010-10-21}
+  s.date = %q{2014-06-20}
   s.email = "matt@eightbitraptor.com"
-  s.files = Dir.glob("{lib,test}/**/*.rb")
+  s.files = Dir.glob("{lib}/**/*.rb")
   s.homepage = "http://github.com/eightbitraptor/http_redirect_test"
   s.require_paths = ["lib"]
   s.summary = "Test Apache behavior using Test::Unit, based on a gist by Patrick Reagan of Viget Labs"

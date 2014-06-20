@@ -6,7 +6,7 @@ Version 1.0
 
 Version 1 has drastically altered the syntax and strucutre of this gem, and is *NOT* backwards compatible with the old `0.1.3` release. You can now no longer use Ruby 1.8 with this gem.
 
-If you absolutely **must** have the old version you can check out the `v0.1` tag. However please be aware that *this branch is over 4 years old* and as such you should really upgrade your url tests to work with the latest version.
+If you absolutely **must** have the old version you can check out the `v0.1.3` tag. However please be aware that *this branch is over 4 years old* and as such you should really upgrade your url tests to work with the latest version.
 
 This library is released under the LGPL v2.1 a copy is included in the `LICENSE.txt` file
 
@@ -62,6 +62,17 @@ simply subclass HTTPRedirectTest in your tests and set the domain that you want 
         should_redirect '/redirect', to: '/ok', permanent: false # => Must be redirect but not a 301
       end
     end
+
+Contributing
+------------
+
+Pull requests and patches are welcome. Please make sure you add tests as appropriate.
+
+There are two sets of tests to check - the unit tests can be run using the default rake task - just run `rake` or `rake test`.
+
+The integration suite fires up a small internal Sinatra app to provide some test endpoints and runs the integration tests against that. It will send a `kill -9` to this app when it finishes. We don't want zombie processes hanging around ;)
+
+You can run the integration tests using `rake integration_test`
 
 Thanks
 ------
