@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    http_redirect_test (1.0.0)
+      minitest (~> 5.3.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -19,7 +25,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  minitest (~> 5.3.5)
-  mocha
-  rake
-  sinatra
+  http_redirect_test!
+  mocha (~> 1.1.0)
+  rake (~> 10.3.0)
+  sinatra (~> 1.4.5)

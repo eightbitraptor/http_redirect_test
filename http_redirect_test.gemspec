@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "http_redirect_test"
-  s.version = "0.1.3"
+  s.version = "1.0.0"
 
   s.authors = ["Matt House"]
   s.date = %q{2010-10-21}
@@ -10,5 +10,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.summary = "Test Apache behavior using Test::Unit, based on a gist by Patrick Reagan of Viget Labs"
 
-  s.add_development_dependency "mocha", ">=0.9.5"
+  s.add_dependency "minitest", "~> 5.3.5"
+  s.add_development_dependency "mocha", "~> 1.1.0"
+  s.add_development_dependency "rake", "~> 10.3.0"
+  s.add_development_dependency "sinatra", "~> 1.4.5"
 end
