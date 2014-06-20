@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "http_redirect_test"
-  s.version = "1.0.1"
+  s.version = "1.0.2"
 
   s.authors = ["Matt House"]
   s.date = %q{2014-06-20}
