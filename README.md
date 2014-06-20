@@ -61,6 +61,12 @@ simply subclass HTTPRedirectTest in your tests and set the domain that you want 
       def test_explicit_non_permanent_check_should_override
         should_redirect '/redirect', to: '/ok', permanent: false # => Must be redirect but not a 301
       end
+
+      def test_overriding_domain_names_temporarily
+        override_domain_with 'http://www.eightbitraptor.com' do
+          should_not_redirect '/'
+        end
+      end
     end
 
 Contributing
