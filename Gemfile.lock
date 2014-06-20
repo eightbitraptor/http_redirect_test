@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    http_redirect_test (1.0.0)
+    http_redirect_test (1.0.1)
       minitest (~> 5.3.5)
 
 GEM
